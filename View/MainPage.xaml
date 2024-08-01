@@ -56,10 +56,10 @@
         StrokeThickness="2"
         StrokeShape="RoundRectangle 5"
         Stroke="Gray">
-            <FlexLayout>
-                <Entry FlexLayout.Grow="1" Text="{Binding Message}" IsEnabled="{Binding IsConnected}"/>
+            <HorizontalStackLayout>
+                <Picker ItemsSource="{Binding Commands}" SelectedIndex="{Binding Command}"/>
                 <Button WidthRequest="100" Text="Send" Command="{Binding SendCommand}" IsEnabled="{Binding IsConnected}"/>
-            </FlexLayout>
+            </HorizontalStackLayout>
         </Border>
     </Grid>
 

@@ -1,7 +1,6 @@
 ﻿using Client.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Sockets;
@@ -20,9 +19,10 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private int port = 1024;
     [ObservableProperty]
-    private string message = string.Empty;
-
+    private int command;
+    
     public ObservableCollection<Message> MessageHistory { get; set; } = [];
+    public ObservableCollection<string> Commands { get; set; } = ["GETDATE", "GETTIME"];
 
     [RelayCommand]
     private async Task Connect()
@@ -101,15 +101,12 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand]
     private void Send()
     {
-        this.Client.Send(this.Message);
+        this.Client.Send(this.Commands[this.Command]);
         this.MessageHistory.Add(new Message()
         {
             Time = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
             Sender = "me:",
-            Content = this.Message
+            Content = this.Commands[this.Command]
         });
-        if (this.Message.ToLower() == "bye")
-            this.Disconnect();
-        this.Message = string.Empty;
     }
 }
